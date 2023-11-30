@@ -15,7 +15,10 @@ const headers = {
   "Access-Control-Allow-Methods": "*",
 };
 
-export const ok = (data: unknown, dataName: string): APIGatewayProxyResult => {
+export const ok = (
+  dataName: string,
+  data: unknown
+): APIGatewayProxyResult => {
   return {
     statusCode: HttpStatusCode.OK,
     body: JSON.stringify({ [dataName]: data }),
@@ -32,8 +35,8 @@ export const noContent = (): APIGatewayProxyResult => {
 };
 
 export const created = (
-  data: unknown,
-  dataName: string
+  dataName: string,
+  data: unknown
 ): APIGatewayProxyResult => {
   return {
     statusCode: HttpStatusCode.CREATED,
@@ -56,16 +59,16 @@ export const appError = (appError: AppError): APIGatewayProxyResult => ({
  * @deprecated intead use a well defined error return
  */
 export const errorMessage = (
-    data: unknown,
-    dataName: string,
-    statusCode: HttpStatusCode
-  ): APIGatewayProxyResult => {
-    return {
-      statusCode,
-      body: JSON.stringify({ [dataName]: data }),
-      headers,
-    };
+  dataName: string,
+  data: unknown,
+  statusCode: HttpStatusCode
+): APIGatewayProxyResult => {
+  return {
+    statusCode,
+    body: JSON.stringify({ [dataName]: data }),
+    headers,
   };
+};
 
 export const internalServerError = (): APIGatewayProxyResult =>
   appError(new InternalError(""));
