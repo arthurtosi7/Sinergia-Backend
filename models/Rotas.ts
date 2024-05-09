@@ -1,5 +1,10 @@
+import Condominio from "./Condominio";
+
 type Rotas = {
-    //INFORMAÇÕES DAS ROTAS
+    letra: string;
+    nome: string;
+    condominios: Condominio[];
+    abreviacao: string;
 };
 
 export default Rotas;
