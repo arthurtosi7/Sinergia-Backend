@@ -1,13 +1,10 @@
-import Condominio from "./Condominio";
-import Elevador from "./Elevador";
-
 type CVT = {
     num_visita: number;
-    cliente: Condominio;
+    cliente: string;
     data: string;
     horario_inicial: string;
     horario_final: string;
-    endereço: string;
+    endereco: string;
     tipo_de_visita: string;
     cnpj: string;
     tecnico: string;
@@ -15,9 +12,10 @@ type CVT = {
     nome_do_recebedor: string;
     cpf_do_recebedor: string;
     temp_paralisacao: string;
+    imagem: string;
     emprego_de_material: boolean;
     devolucao_da_chave: boolean;
-    elevador: Elevador;
+    nome_elevador: string;
     info_adicionais: string;
     info_tecnica: string;
 };
