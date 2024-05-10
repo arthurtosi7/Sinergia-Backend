@@ -1,4 +1,4 @@
-import Condominio from "../../models/Condominio";
+import Condominio from "../models/Condominio";
 
 interface ICondominiosRepositories {
 

@@ -1,7 +1,7 @@
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import ICondominiosRepositories from "../ICondominiosRepositories";
-import Condominio from "../../models/Condominio";
+import Condominio from "../models/Condominio";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAtLGZpmFzhi9ydmWjr8W3-C0xCfkpDCw0",
