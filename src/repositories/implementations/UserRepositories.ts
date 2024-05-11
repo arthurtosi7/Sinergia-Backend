@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore";
 import IUserRepositories from "../IUserRepositories";
 import user from "../../models/User";
 
@@ -19,15 +19,24 @@ class UserRepositories implements IUserRepositories {
     //Modo read only
     async create(full_name: string, username: string ,email: string, password: string, birth: string, job: string): Promise<void> {
         await setDoc(doc(this.db, "usuarios", username), {
-            const date_of_birth = new Date(birth); //?????
-            full_name: full_name,
+            //const date_of_birth = new Date(birth); //?????
+            name: full_name,
             email: email,
             password: password,
-            birth: date_of_birth,
+            birth: birth,
             job: job
         });
 
         return undefined;
+    }
+
+    async findByUsername(username: string): Promise<user> {
+        const document = await getDoc(doc(this.db, "usuarios", username));
+        if (!document.exists()) {
+            return undefined;
+        }
+        const user = document.data();
+        return user as user;
     }
 }
 

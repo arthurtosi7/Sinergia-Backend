@@ -16,10 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const testFirebase = async (
+const sayHello = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   return ok("message", "Hello World!");
 };
 
-export const handler = Handler(testFirebase);
+export const handler = Handler(sayHello);
