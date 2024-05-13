@@ -22,6 +22,10 @@ const insertCondominio = async (
     if (rota === undefined)
         return notFound("Rota não encontrada!");
 
+    const verify = await database_rota.condominioAlreadyOnRotas(rota, nome_cond);
+    if (verify)
+        return badRequest("Condomínio já está na rota!");
+
     await database_rota.insertCondominio(rota, nome_cond);
 
     return ok("Condomínio inserido com sucesso", "message");

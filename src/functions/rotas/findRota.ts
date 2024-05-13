@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { Handler } from "src/errors/Handler";
-import {badRequest, notFound, ok} from "src/utils/Returns";
+import { badRequest, notFound, ok } from "src/utils/Returns";
 import RotasRepositories from "../../repositories/implementations/RotasRepositories";
 
 const findRota = async (

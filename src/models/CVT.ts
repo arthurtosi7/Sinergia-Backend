@@ -1,5 +1,5 @@
 type CVT = {
-    num_visita: number;
+    num_visita: string;
     cliente: string;
     data: string;
     horario_inicial: string;

@@ -17,6 +17,18 @@ interface IRotasRepositories {
     findByLetra(letra: string): Promise<Rota>;
 
     /**
+     * Check if a condo is already in a route
+     * @param rota
+     * @param condominio
+     */
+    condominioAlreadyOnRotas(rota: Rota, condominio: string): Promise<boolean>;
+
+    /**
+     * List all routes
+     */
+    listAll(): Promise<Rota[]>;
+
+    /**
      * Insert a new condo in a route
      * @param rota
      * @param condominio

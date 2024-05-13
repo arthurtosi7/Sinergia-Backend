@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, setDoc, getDoc, doc, deleteDoc, collection, getDocs } from "firebase/firestore";
 import IRotasRepositories from "../IRotasRepositories";
 import Rota from "../../models/Rota";
-import Condominio from "../../models/Condominio";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAtLGZpmFzhi9ydmWjr8W3-C0xCfkpDCw0",
@@ -15,7 +14,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// @ts-ignore
 class RotasRepositories implements IRotasRepositories {
     private readonly db = getFirestore(app);
 
@@ -48,6 +46,28 @@ class RotasRepositories implements IRotasRepositories {
         return rota as Rota;
 
 
+    }
+
+    async condominioAlreadyOnRotas (rota: Rota, condominio: string): Promise<boolean> {
+        const condominiosCollection = collection(this.db, 'rotas', rota.letra, 'condominios');
+        const condominiosSnapshot = await getDocs(condominiosCollection);
+        const condominios = condominiosSnapshot.docs.map(doc => doc.id);
+        return condominios.includes(condominio);
+    }
+
+    async listAll(): Promise<Rota[]> {
+        const rotasCollection = collection(this.db, 'rotas');
+        const rotasSnapshot = await getDocs(rotasCollection);
+
+        const rotaList = rotasSnapshot.docs.map(doc =>
+            ({
+                letra: doc.data().letra,
+                nome_regiao: doc.data().nome_regiao,
+                abreviacao: doc.data().abreviacao,
+            })
+        );
+
+        return rotaList as unknown as Rota[];
     }
 
     //Função para inserir um condominio em uma rota. Recebe uma rota e o nome do condomínio. Deve salvar apenas o nome do condomínio dentro de uma nova coleção chamada "condominios" dentro da rota.

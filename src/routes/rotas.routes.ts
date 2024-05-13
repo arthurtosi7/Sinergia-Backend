@@ -50,4 +50,21 @@ export const rotasRoutes = {
         ],
     },
 
+    listRotas: {
+        handler:
+            "src/functions/rotas/listAll.handler",
+        events: [
+            {
+                http: {
+                    path: "rotas",
+                    method: "get",
+                    cors: true,
+                    // authorizer: {
+                    //   name: "authenticate",
+                    // },
+                },
+            },
+        ],
+    },
+
 }

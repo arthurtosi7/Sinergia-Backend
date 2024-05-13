@@ -8,9 +8,9 @@ const updateUser = async (
 ): Promise<APIGatewayProxyResult> => {
     
     const { full_name, username, email, password, birth, job } = JSON.parse(event.body);
-  if (full_name === undefined || username === undefined || email === undefined
-    || password === undefined || birth === undefined || job === undefined)
-      throw badRequest("Algum campo não definido!");
+    if (full_name === undefined || username === undefined || email === undefined
+        || password === undefined || birth === undefined || job === undefined)
+        throw badRequest("Algum campo não definido!");
       
   const database = new UserRepositories();
   const person = await database.findByEmail(email);
