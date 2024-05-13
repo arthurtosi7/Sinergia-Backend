@@ -1,0 +1,28 @@
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { Handler } from "src/errors/Handler";
+import {badRequest, notFound } from "src/utils/Returns";
+import RotasRepositories from "../../repositories/implementations/RotasRepositories";
+import CondominiosRepositories from "../../repositories/implementations/CondominiosRepositories";
+
+const insertCondominio = async (
+    event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+    const { nome_cond } = JSON.parse(event.body);
+    if (nome_cond === undefined)
+        return  badRequest("Nome do condomínio não definido!");
+
+    const database_cond = new CondominiosRepositories();
+    const condominio = await database_cond.findByName(nome_cond);
+    if (condominio == undefined)
+        return notFound("Condomínio não encontrado!");
+
+    const database_rota = new RotasRepositories();
+    const { letra } = event.pathParameters;
+    const rota = await database_rota.findByLetra(letra);
+    if (rota === undefined)
+        return notFound("Rota não encontrada!");
+
+    await database_rota.insertCondominio(rota, condominio);
+}
+
+export const handler = Handler(insertCondominio);

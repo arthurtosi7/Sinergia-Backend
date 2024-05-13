@@ -1,7 +1,7 @@
-import { getFirestore } from "firebase/firestore";
+import {doc, getDoc, getFirestore} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import ICondominiosRepositories from "../ICondominiosRepositories";
-import Condominio from "../models/Condominio";
+import Condominio from "../../models/Condominio";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAtLGZpmFzhi9ydmWjr8W3-C0xCfkpDCw0",
@@ -13,9 +13,17 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 class CondominiosRepositories implements ICondominiosRepositories {
+    private readonly db = getFirestore(app);
+    async findByName(name: string): Promise<Condominio> {
+        const document = await getDoc(doc(this.db, "condominios", name));
+        if (!document.exists()) {
+            return undefined;
+        }
+        const cond = document.data();
+        return cond as Condominio;
+    }
 
 }
 

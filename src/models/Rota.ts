@@ -1,10 +1,10 @@
 import Condominio from "./Condominio";
 
-type Rotas = {
+type Rota = {
     letra: string;
     nome: string;
-    condominios: Condominio[];
+    condominios: string[];
     abreviacao: string;
 };
 
-export default Rotas;
+export default Rota;
