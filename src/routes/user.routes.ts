@@ -32,4 +32,21 @@ export const userRoutes = {
             },
         ],
     },
+
+    deleteUser: {
+        handler:
+            "src/functions/usuario/deleteUser.handler",
+        events: [
+            {
+                http: {
+                    path: "user/{username}",
+                    method: "delete",
+                    cors: true,
+                    // authorizer: {
+                    //   name: "authenticate",
+                    // },
+                },
+            },
+        ],
+    },
 }

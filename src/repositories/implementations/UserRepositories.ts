@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore";
+import { getFirestore, setDoc, getDoc, doc, deleteDoc } from "firebase/firestore";
 import IUserRepositories from "../IUserRepositories";
-import user from "../../models/User";
+import User from "../../models/User";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAtLGZpmFzhi9ydmWjr8W3-C0xCfkpDCw0",
@@ -30,13 +30,17 @@ class UserRepositories implements IUserRepositories {
         return undefined;
     }
 
-    async findByUsername(username: string): Promise<user> {
+    async findByUsername(username: string): Promise<User> {
         const document = await getDoc(doc(this.db, "usuarios", username));
         if (!document.exists()) {
             return undefined;
         }
         const user = document.data();
-        return user as user;
+        return user as User;
+    }
+
+    async delete(username: string): Promise<void> {
+        await deleteDoc(doc(this.db, "usuarios", username));
     }
 }
 

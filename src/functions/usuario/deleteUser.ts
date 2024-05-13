@@ -16,7 +16,7 @@ const deleteUser = async (
     if (user === undefined)
         return notFound("Usuário não encontrado!");
 
-    database.delete(username);
+    await database.delete(username);
         
     return ok("message", "Usuário deletado com sucesso!");
 };
