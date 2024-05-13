@@ -40,7 +40,7 @@ export const rotasRoutes = {
             {
                 http: {
                     path: "rota/{letra}/condominio",
-                    method: "patch",
+                    method: "post",
                     cors: true,
                     // authorizer: {
                     //   name: "authenticate",

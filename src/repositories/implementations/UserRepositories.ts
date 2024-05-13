@@ -20,6 +20,7 @@ class UserRepositories implements IUserRepositories {
     async create(full_name: string, username: string ,email: string, password: string, birth: string, job: string): Promise<void> {
         await setDoc(doc(this.db, "usuarios", username), {
             //const date_of_birth = new Date(birth); //?????
+            username: username,
             name: full_name,
             email: email,
             password: password,

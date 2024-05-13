@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { Handler } from "src/errors/Handler";
-import {badRequest, notFound } from "src/utils/Returns";
+import {badRequest, notFound, ok} from "src/utils/Returns";
 import RotasRepositories from "../../repositories/implementations/RotasRepositories";
 import CondominiosRepositories from "../../repositories/implementations/CondominiosRepositories";
 
@@ -22,7 +22,9 @@ const insertCondominio = async (
     if (rota === undefined)
         return notFound("Rota não encontrada!");
 
-    await database_rota.insertCondominio(rota, condominio);
+    await database_rota.insertCondominio(rota, nome_cond);
+
+    return ok("Condomínio inserido com sucesso", "message");
 }
 
 export const handler = Handler(insertCondominio);

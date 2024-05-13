@@ -1,8 +1,7 @@
-import Condominio from "./Condominio";
 
 type Rota = {
     letra: string;
-    nome: string;
+    nome_regiao: string;
     condominios: string[];
     abreviacao: string;
 };

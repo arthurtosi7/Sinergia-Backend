@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, setDoc, getDoc, doc, deleteDoc } from "firebase/firestore";
+import { getFirestore, setDoc, getDoc, doc, deleteDoc, collection, getDocs } from "firebase/firestore";
 import IRotasRepositories from "../IRotasRepositories";
 import Rota from "../../models/Rota";
 import Condominio from "../../models/Condominio";
@@ -15,13 +15,16 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+// @ts-ignore
 class RotasRepositories implements IRotasRepositories {
     private readonly db = getFirestore(app);
 
     async create(letra: string, nome_regiao: string, abreviacao: string): Promise<void> {
         await setDoc(doc(this.db, "rotas", letra), {
+            letra: letra,
             nome_regiao: nome_regiao,
-            abreviacao: abreviacao
+            abreviacao: abreviacao,
+            condominios: []
         });
 
         return undefined;
@@ -32,14 +35,25 @@ class RotasRepositories implements IRotasRepositories {
         if (!document.exists()) {
             return undefined;
         }
-        const rota = document.data();
+
+        const condominiosCollection = collection(this.db, 'rotas', letra, 'condominios');
+        const condominiosSnapshot = await getDocs(condominiosCollection);
+        const condominios = condominiosSnapshot.docs.map(Condominiodoc => Condominiodoc.id);
+        const rota = {
+            letra: document.data().letra,
+            nome_regiao: document.data().nome_regiao,
+            abreviacao: document.data().abreviacao,
+            condominios: condominios
+        }
         return rota as Rota;
+
+
     }
 
     //Função para inserir um condominio em uma rota. Recebe uma rota e o nome do condomínio. Deve salvar apenas o nome do condomínio dentro de uma nova coleção chamada "condominios" dentro da rota.
-    async insertCondominio (rota: Rota, condominio: Condominio): Promise<void> {
-        await setDoc(doc(this.db, "rotas", rota.letra, "condominios", condominio.nome), {
-            sub_rotas: condominio.sub_rota
+    async insertCondominio (rota: Rota, condominio: string): Promise<void> {
+        await setDoc(doc(this.db, "rotas", rota.letra, "condominios", condominio), {
+            nome: condominio
         });
 
         return undefined;

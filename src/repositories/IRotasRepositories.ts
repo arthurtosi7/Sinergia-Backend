@@ -1,4 +1,5 @@
 import Rota from "../models/Rota";
+import Condominio from "../models/Condominio";
 
 interface IRotasRepositories {
     /**
