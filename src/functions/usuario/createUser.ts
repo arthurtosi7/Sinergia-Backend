@@ -12,7 +12,7 @@ const createUser = async (
         return  badRequest("Algum campo não definido!");
 
     const database = new UserRepositories();
-    const verify = await database.findByUsername(usuario);
+    const verify = await database.findByEmail(email);
     if (verify !== undefined)
         return  badRequest("Email já cadastrado!");
 

@@ -14,10 +14,10 @@ interface IUserRepositories {
 
     /**
      * Find a user by email
-     * @param username Username of the user
-     * @returns A user with the given username
+     * @param email Email of the user
+     * @returns A user with the given email
      */
-    findByUsername(username: string): Promise<User>;
+    findByEmail(email: string): Promise<User>;
 
     /**
      * List all users
@@ -25,18 +25,9 @@ interface IUserRepositories {
     list(): Promise<User[]>;
 
     /**
-     * Update a user
-     * @param user User to be updated
-     * @param new_password new password
+     * Update user
      */
-    updatePassword(user: User, new_password: string): Promise<void>;
-
-    /**
-     * Update a user's job
-     * @param user User to be updated
-     * @param new_job new job
-     */
-    updateJob(user: User, new_job: string): Promise<void>;
+    update(full_name: string, username: string ,email: string, password: string, birth: string, job: string): Promise<void>;
 
     /**
      * Delete a user

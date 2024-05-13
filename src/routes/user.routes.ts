@@ -22,8 +22,25 @@ export const userRoutes = {
         events: [
             {
                 http: {
-                    path: "user/{username}",
+                    path: "user/{email}",
                     method: "get",
+                    cors: true,
+                    // authorizer: {
+                    //   name: "authenticate",
+                    // },
+                },
+            },
+        ],
+    },
+
+    updateUser: {
+        handler:
+            "src/functions/usuario/updateUser.handler",
+        events: [
+            {
+                http: {
+                    path: "user/{email}",
+                    method: "post",
                     cors: true,
                     // authorizer: {
                     //   name: "authenticate",
@@ -39,7 +56,7 @@ export const userRoutes = {
         events: [
             {
                 http: {
-                    path: "user/{username}",
+                    path: "user/{email}",
                     method: "delete",
                     cors: true,
                     // authorizer: {

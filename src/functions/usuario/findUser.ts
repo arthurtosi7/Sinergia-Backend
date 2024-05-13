@@ -6,12 +6,12 @@ import UserRepositories from "../../repositories/implementations/UserRepositorie
 const findUser = async (
     event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-    const { username } = event.pathParameters;
-    if (username === undefined)
+    const { email } = event.pathParameters;
+    if (email === undefined)
         return  badRequest("Algum campo não definido!");
 
     const database = new UserRepositories();
-    const user = await database.findByUsername(username);
+    const user = await database.findByEmail(email);
     if (user === undefined)
         return notFound("Usuário não encontrado!");
 

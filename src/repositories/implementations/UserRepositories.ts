@@ -18,7 +18,7 @@ class UserRepositories implements IUserRepositories {
     private readonly db = getFirestore(app); //Private pois só será usada nessa classe
     //Modo read only
     async create(full_name: string, username: string ,email: string, password: string, birth: string, job: string): Promise<void> {
-        await setDoc(doc(this.db, "usuarios", username), {
+        await setDoc(doc(this.db, "usuarios", email), {
             //const date_of_birth = new Date(birth); //?????
             username: username,
             name: full_name,
@@ -31,14 +31,33 @@ class UserRepositories implements IUserRepositories {
         return undefined;
     }
 
-    async findByUsername(username: string): Promise<User> {
-        const document = await getDoc(doc(this.db, "usuarios", username));
+    async findByEmail(email: string): Promise<User> {
+        const document = await getDoc(doc(this.db, "usuarios", email));
         if (!document.exists()) {
             return undefined;
         }
         const user = document.data();
         return user as User;
     }
+    
+    async update(full_name: string, username: string, email: string, password: string, birth: string, job: string): Promise<void> {
+        const document = await getDoc(doc(this.db, "usuarios", email));
+        if (!document.exists()) {
+            return undefined;
+        }
+        await setDoc(doc(this.db, "usuarios", email), {
+            //const date_of_birth = new Date(birth); //?????
+            username: username,
+            name: full_name,
+            email: email,
+            password: password,
+            birth: birth,
+            job: job
+        });
+
+        return undefined;
+    }
+
 
     async delete(username: string): Promise<void> {
         await deleteDoc(doc(this.db, "usuarios", username));
