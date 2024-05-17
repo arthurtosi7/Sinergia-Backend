@@ -1,4 +1,4 @@
-import {doc, getDoc, setDoc, getFirestore, deleteDoc} from "firebase/firestore";
+import {doc, getDoc, setDoc, getFirestore, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import ICondominiosRepositories from "../ICondominiosRepositories";
 import Condominio from "../../models/Condominio";

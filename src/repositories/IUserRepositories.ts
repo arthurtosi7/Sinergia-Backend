@@ -28,7 +28,7 @@ interface IUserRepositories {
     /**
      * Update user
      */
-    update(full_name: string, username: string ,email: string, password: string, birth: string, job: Cargos): Promise<void>;
+    update(full_name: string, username: string, email: string, password: string, birth: Date, job: string): Promise<void>;
 
     /**
      * Delete a user

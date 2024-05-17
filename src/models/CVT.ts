@@ -1,7 +1,7 @@
 type CVT = {
     num_visita: string;
     cliente: string;
-    data: string;
+    data: Date;
     horario_inicial: string;
     horario_final: string;
     endereco: string;

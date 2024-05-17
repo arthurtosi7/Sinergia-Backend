@@ -18,13 +18,18 @@ class UserRepositories implements IUserRepositories {
     private readonly db = getFirestore(app); //Private pois só será usada nessa classe
     //Modo read only
     async create(full_name: string, username: string ,email: string, password: string, birth: string, job: string): Promise<void> {
+        const birthDate = new Date(birth);
+
+        if (isNaN(birthDate.getTime())) {
+            throw new Error("Data de nascimento inválida");
+        }
+
         await setDoc(doc(this.db, "usuarios", email), {
-            //const date_of_birth = new Date(birth); //?????
             username: username,
             name: full_name,
             email: email,
             password: password,
-            birth: birth,
+            birth: birthDate,
             job: job
         });
 
@@ -41,13 +46,13 @@ class UserRepositories implements IUserRepositories {
             full_name: document.data().full_name,
             email: document.data().email,
             password: document.data().password,
-            birth: document.data().birth,
+            birth: document.data().birth.toDate(),
             job: document.data().job
         }
         return user as unknown as User;
     }
     
-    async update(full_name: string, username: string, email: string, password: string, birth: string, job: string): Promise<void> {
+    async update(full_name: string, username: string, email: string, password: string, birth: Date, job: string): Promise<void> {
         const document = await getDoc(doc(this.db, "usuarios", email));
         if (!document.exists()) {
             return undefined;
