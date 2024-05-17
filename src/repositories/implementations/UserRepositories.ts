@@ -36,8 +36,15 @@ class UserRepositories implements IUserRepositories {
         if (!document.exists()) {
             return undefined;
         }
-        const user = document.data();
-        return user as User;
+        const user = {
+            username: document.data().username,
+            full_name: document.data().full_name,
+            email: document.data().email,
+            password: document.data().password,
+            birth: document.data().birth,
+            job: document.data().job
+        }
+        return user as unknown as User;
     }
     
     async update(full_name: string, username: string, email: string, password: string, birth: string, job: string): Promise<void> {

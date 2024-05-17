@@ -2,8 +2,6 @@ import {doc, getDoc, setDoc, getFirestore, deleteDoc} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import ICondominiosRepositories from "../ICondominiosRepositories";
 import Condominio from "../../models/Condominio";
-import CVT from "src/models/CVT";
-import Elevador from "src/models/Elevador";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAtLGZpmFzhi9ydmWjr8W3-C0xCfkpDCw0",
@@ -23,13 +21,31 @@ class CondominiosRepositories implements ICondominiosRepositories {
         if (!document.exists()) {
             return undefined;
         }
-        const cond = document.data();
-        return cond as Condominio;
+        const cond = {
+            name: document.data().name,
+            bairro: document.data().bairro,
+            cep: document.data().cep,
+            cidade: document.data().cidade,
+            email: document.data().email,
+            federacao: document.data().federacao,
+            logradouro: document.data().logradouro,
+            mes_art: document.data().mes_art,
+            mes_ria: document.data().mes_ria,
+            numero: document.data().numero,
+            rota: document.data().rota,
+            status_ria: document.data().status_ria,
+            sub_rota: document.data().sub_rota,
+            tel_admin: document.data().tel_admin,
+            tel_sindico: document.data().tel_sindico,
+            nome_CVT: document.data().nome_CVT,
+            nome_elevador: document.data().nome_elevador
+        }
+        return cond as unknown as Condominio;
     }
 
     async create(name: string, bairro: string, cep: string, cidade: string, email: string, federacao: string,
     logradouro: string, mes_art: string, mes_ria: string, numero: number, rota: string, status_ria: boolean,
-    sub_rota: number, tel_admin: string, tel_sindico: string, CVT: CVT[], elevador: Elevador): Promise<void> {
+    sub_rota: number, tel_admin: string, tel_sindico: string, nome_CVT: string, nome_elevador: string): Promise<void> {
         await setDoc(doc(this.db, "condominios", name),{
         name: name,
         bairro: bairro,
@@ -46,14 +62,14 @@ class CondominiosRepositories implements ICondominiosRepositories {
         sub_rota: sub_rota,
         tel_admin: tel_admin,
         tel_sindico: tel_sindico,
-        CVT: CVT,
-        elevador: elevador
+        nome_CVT: nome_CVT,
+        nome_elevador: nome_elevador
         });
     }
 
     async update(name: string, bairro: string, cep: string, cidade: string, email: string, federacao: string,
     logradouro: string, mes_art: string, mes_ria: string, numero: number, rota: string, status_ria: boolean,
-    sub_rota: number, tel_admin: string, tel_sindico: string, CVT: CVT[], elevador: Elevador): Promise<void> {
+    sub_rota: number, tel_admin: string, tel_sindico: string, nome_CVT: string, nome_elevador: string): Promise<void> {
         const document = await getDoc(doc(this.db, "condominios", name));
         if (!document.exists()) {
             return undefined;
@@ -74,8 +90,8 @@ class CondominiosRepositories implements ICondominiosRepositories {
             sub_rota: sub_rota,
             tel_admin: tel_admin,
             tel_sindico: tel_sindico,
-            CVT: CVT,
-            elevador: elevador
+            nome_CVT: nome_CVT,
+            nome_elevador: nome_elevador
         });
     }
 

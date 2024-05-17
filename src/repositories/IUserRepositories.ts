@@ -1,5 +1,6 @@
 import User from '../models/User';
 
+
 interface IUserRepositories {
     /**
      * Create a new user
@@ -27,7 +28,7 @@ interface IUserRepositories {
     /**
      * Update user
      */
-    update(full_name: string, username: string ,email: string, password: string, birth: string, job: string): Promise<void>;
+    update(full_name: string, username: string ,email: string, password: string, birth: string, job: Cargos): Promise<void>;
 
     /**
      * Delete a user

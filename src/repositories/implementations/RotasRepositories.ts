@@ -44,14 +44,12 @@ class RotasRepositories implements IRotasRepositories {
             condominios: condominios
         }
         return rota as Rota;
-
-
     }
 
     async condominioAlreadyOnRotas (rota: Rota, condominio: string): Promise<boolean> {
         const condominiosCollection = collection(this.db, 'rotas', rota.letra, 'condominios');
         const condominiosSnapshot = await getDocs(condominiosCollection);
-        const condominios = condominiosSnapshot.docs.map(doc => doc.id);
+        const condominios = condominiosSnapshot.docs.map(Conddoc => Conddoc.id);
         return condominios.includes(condominio);
     }
 

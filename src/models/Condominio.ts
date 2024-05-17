@@ -17,9 +17,8 @@ type Condominio = {
     sub_rota: number;
     tel_admin: string;
     tel_sindico: string;
-    CVT: CVT[];
-    elevador: Elevador;
-    //INFORMAÇÕES DO CONDOMÍNIO
+    nome_CVT: string;
+    nome_elevador: string;
 };
 
 export default Condominio;
