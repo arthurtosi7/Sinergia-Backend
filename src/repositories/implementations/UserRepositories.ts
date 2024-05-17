@@ -57,13 +57,19 @@ class UserRepositories implements IUserRepositories {
         if (!document.exists()) {
             return undefined;
         }
+
+        const birthDate = new Date(birth);
+
+        if (isNaN(birthDate.getTime())) {
+            throw new Error("Data de nascimento inválida");
+        }
+
         await setDoc(doc(this.db, "usuarios", email), {
-            //const date_of_birth = new Date(birth); //?????
             username: username,
             name: full_name,
             email: email,
             password: password,
-            birth: birth,
+            birth: birthDate,
             job: job
         });
 

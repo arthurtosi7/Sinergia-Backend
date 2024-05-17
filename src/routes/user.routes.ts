@@ -40,7 +40,7 @@ export const userRoutes = {
             {
                 http: {
                     path: "user/{email}",
-                    method: "post",
+                    method: "put",
                     cors: true,
                     // authorizer: {
                     //   name: "authenticate",
