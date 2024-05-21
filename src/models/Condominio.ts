@@ -1,6 +1,3 @@
-import CVT from "./CVT";
-import Elevador from "./Elevador";
-
 type Condominio = {
     nome: string;
     bairro: string;

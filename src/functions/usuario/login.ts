@@ -6,7 +6,7 @@ import { bodySchema } from "src/entities/login/Login";
 
 export const handle: APIGatewayProxyHandler = async (event) => {
     if (!event.body) {
-        return badRequest("A valid body is required");
+        return badRequest("Corpo vazio");
     }
 
     type UserLogin = { email: string; senha: string };

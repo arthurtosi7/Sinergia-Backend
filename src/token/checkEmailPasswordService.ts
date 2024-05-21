@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { docClient } from "dynamodb";
+import { docClient } from "src/dynamodb";
 import { ITokenData } from "./tokenData";
 import { PermissionLevels } from "src/enums/permissionLevels";
 
