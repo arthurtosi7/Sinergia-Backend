@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, setDoc, getDoc, doc, deleteDoc, collection, getDocs } from "firebase/firestore";
+import { Timestamp, getFirestore, setDoc, getDoc, doc, deleteDoc, collection, getDocs } from "firebase/firestore";
 import ICVTRepositories from "../ICVTRepositories";
 import CVT from "../../models/CVT";
 import Condominio from "../../models/Condominio";
@@ -19,7 +19,7 @@ class CVTRepositories implements ICVTRepositories {
     private readonly db = getFirestore(app);
 
     async create(num_visita: string, cliente: string, data: Date, horario_inicial: string, horario_final: string, endereco: string, tipo_de_visita: string, cnpj: string, tecnico: string, tecnico_auxiliar: string, nome_do_recebedor: string, cpf_do_recebedor: string, temp_paralisacao: string, imagem: string, emprego_de_material: boolean, devolucao_da_chave: boolean, nome_elevador: string, info_adicionais: string, info_tecnica: string): Promise<void> {
-        await setDoc(doc(this.db, "cvts", num_visita), {
+        await setDoc(doc(this.db, "cvt", num_visita), {
             num_visita: num_visita,
             cliente: cliente,
             data: data,
@@ -102,6 +102,36 @@ class CVTRepositories implements ICVTRepositories {
 
         return cvtList as unknown as CVT[];
     }
+
+    async update(num_visita: string, cliente: string, data: Timestamp, horario_inicial: string, horario_final: string, endereco: string, tipo_de_visita: string,
+        cnpj: string, tecnico: string, tecnico_auxiliar: string, nome_do_recebedor: string, cpf_do_recebedor: string, temp_paralisacao: string,
+        imagem: string, emprego_de_material: string, devolucao_da_chave: string, nome_elevador: string, info_adicionais: string,
+        info_tecnica: string): Promise<void> {
+            const document = await getDoc(doc(this.db, "cvt", num_visita));
+            if (!document.exists()) {
+                return undefined;
+            }
+            await setDoc(doc(this.db, "cvt", num_visita), {
+                cliente: doc.data().cliente,
+                data: doc.data().data.toDate(),
+                horario_inicial: doc.data().horario_inicial,
+                horario_final: doc.data().horario_final,
+                endereco: doc.data().endereco,
+                tipo_de_visita: doc.data().tipo_de_visita,
+                cnpj: doc.data().cnpj,
+                tecnico: doc.data().tecnico,
+                tecnico_auxiliar: doc.data().tecnico_auxiliar,
+                nome_do_recebedor: doc.data().nome_do_recebedor,
+                cpf_do_recebedor: doc.data().cpf_do_recebedor,
+                temp_paralisacao: doc.data().temp_paralisacao,
+                imagem: doc.data().imagem,
+                emprego_de_material: doc.data().emprego_de_material,
+                devolucao_da_chave: doc.data().devolucao_da_chave,
+                nome_elevador: doc.data().nome_elevador,
+                info_adicionais: doc.data().info_adicionais,
+                info_tecnica: doc.data().info_tecnica
+            });
+        }
 }
 
 export default CVTRepositories;
